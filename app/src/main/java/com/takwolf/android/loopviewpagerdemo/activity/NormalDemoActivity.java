@@ -13,6 +13,8 @@ import com.takwolf.android.loopviewpager.LoopViewPager;
 import com.takwolf.android.loopviewpagerdemo.R;
 import com.takwolf.android.loopviewpagerdemo.adapter.BannerPagerAdapter;
 import com.takwolf.android.loopviewpagerdemo.listener.NavigationFinishClickListener;
+import com.takwolf.android.loopviewpagerdemo.listener.PageTransformerWrapper;
+import com.takwolf.android.loopviewpagerdemo.listener.RotateDownTransformer;
 import com.takwolf.android.loopviewpagerdemo.model.Banner;
 import com.takwolf.android.loopviewpagerdemo.util.HandlerUtils;
 
@@ -58,6 +60,7 @@ public class NormalDemoActivity extends AppCompatActivity implements SwipeRefres
 
         toolbar.setNavigationOnClickListener(new NavigationFinishClickListener(this));
 
+        viewPager.setPageTransformer(true, new PageTransformerWrapper(new RotateDownTransformer()));
         adapter = new BannerPagerAdapter(this, gapSpace);
         adapter.getBannerList().addAll(Banner.buildList());
         viewPager.setDataAdapter(adapter);
