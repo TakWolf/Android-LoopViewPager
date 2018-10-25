@@ -31,7 +31,10 @@ public class LoopViewPager extends ViewPager {
     private RecycledViewPool recycledViewPool;
 
     @Nullable
-    private List<OnAdapterChangeListener> onAdapterChangeListenerList;
+    private List<ViewPager.OnAdapterChangeListener> onAdapterChangeListenerList;
+
+    @Nullable
+    private List<OnAdapterChangeListener> onAdapterChangeListener2List;
 
     public LoopViewPager(@NonNull Context context) {
         super(context);
@@ -124,22 +127,42 @@ public class LoopViewPager extends ViewPager {
         this.recycledViewPool = recycledViewPool;
     }
 
-    public void addOnAdapterChangeListener(@NonNull OnAdapterChangeListener listener) {
+    @Override
+    public void addOnAdapterChangeListener(@NonNull ViewPager.OnAdapterChangeListener listener) {
         if (onAdapterChangeListenerList == null) {
             onAdapterChangeListenerList = new ArrayList<>();
         }
         onAdapterChangeListenerList.add(listener);
     }
 
-    public void removeOnAdapterChangeListener(@NonNull OnAdapterChangeListener listener) {
+    @Override
+    public void removeOnAdapterChangeListener(@NonNull ViewPager.OnAdapterChangeListener listener) {
         if (onAdapterChangeListenerList != null) {
             onAdapterChangeListenerList.remove(listener);
         }
     }
 
+    public void addOnAdapterChangeListener(@NonNull OnAdapterChangeListener listener) {
+        if (onAdapterChangeListener2List == null) {
+            onAdapterChangeListener2List = new ArrayList<>();
+        }
+        onAdapterChangeListener2List.add(listener);
+    }
+
+    public void removeOnAdapterChangeListener(@NonNull OnAdapterChangeListener listener) {
+        if (onAdapterChangeListener2List != null) {
+            onAdapterChangeListener2List.remove(listener);
+        }
+    }
+
     void dispatchOnAdapterChanged(@Nullable RecycledPagerAdapter oldAdapter, @Nullable RecycledPagerAdapter newAdapter) {
         if (onAdapterChangeListenerList != null && !onAdapterChangeListenerList.isEmpty()) {
-            for (OnAdapterChangeListener onAdapterChangeListener : onAdapterChangeListenerList) {
+            for (ViewPager.OnAdapterChangeListener onAdapterChangeListener : onAdapterChangeListenerList) {
+                onAdapterChangeListener.onAdapterChanged(this, oldAdapter, newAdapter);
+            }
+        }
+        if (onAdapterChangeListener2List != null && !onAdapterChangeListener2List.isEmpty()) {
+            for (OnAdapterChangeListener onAdapterChangeListener : onAdapterChangeListener2List) {
                 onAdapterChangeListener.onAdapterChanged(this, oldAdapter, newAdapter);
             }
         }
@@ -312,7 +335,7 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void notifyDataSetChanged() {
-            synchronized(this) {
+            synchronized (this) {
                 if (dataSetObserver != null) {
                     dataSetObserver.onChanged();
                 }
