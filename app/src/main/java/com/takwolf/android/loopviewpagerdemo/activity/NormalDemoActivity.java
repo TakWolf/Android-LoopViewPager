@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
-public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class NormalDemoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -51,7 +51,7 @@ public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demo);
+        setContentView(R.layout.activity_normal_demo);
         ButterKnife.bind(this);
 
         gapSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());

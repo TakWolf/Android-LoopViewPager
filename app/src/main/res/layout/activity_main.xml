@@ -25,11 +25,19 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_demo"
+                android:id="@+id/btn_normal_demo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="Demo"
+                android:text="Normal Demo"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_list_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="List Header"
                 android:textAllCaps="false" />
 
         </LinearLayout>

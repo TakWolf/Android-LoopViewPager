@@ -19,9 +19,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btn_demo)
-    void onBtnDemoClick() {
-        startActivity(new Intent(this, DemoActivity.class));
+    @OnClick(R.id.btn_normal_demo)
+    void onBtnNormalDemoClick() {
+        startActivity(new Intent(this, NormalDemoActivity.class));
+    }
+
+    @OnClick(R.id.btn_list_header)
+    void onBtnListHeaderClick() {
+        startActivity(new Intent(this, ListHeaderActivity.class));
     }
 
 }

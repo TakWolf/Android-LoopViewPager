@@ -21,7 +21,12 @@
         </activity>
 
         <activity
-            android:name=".activity.DemoActivity"
+            android:name=".activity.NormalDemoActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".activity.ListHeaderActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
 

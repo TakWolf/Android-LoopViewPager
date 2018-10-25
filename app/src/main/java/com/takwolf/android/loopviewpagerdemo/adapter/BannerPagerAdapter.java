@@ -62,7 +62,7 @@ public class BannerPagerAdapter extends LoopViewPager.RecycledPagerAdapter<Banne
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(activity, inflater.inflate(R.layout.item_banner, parent, false));
+        return new ViewHolder(inflater.inflate(R.layout.item_banner, parent, false));
     }
 
     @Override
@@ -87,7 +87,7 @@ public class BannerPagerAdapter extends LoopViewPager.RecycledPagerAdapter<Banne
         @BindView(R.id.tv_title)
         TextView tvTitle;
 
-        ViewHolder(@NonNull Activity activity, @NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

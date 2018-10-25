@@ -13,7 +13,7 @@
         android:elevation="@dimen/app_bar_elevation"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
-        app:title="Demo"
+        app:title="Normal Demo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v4.widget.SwipeRefreshLayout
