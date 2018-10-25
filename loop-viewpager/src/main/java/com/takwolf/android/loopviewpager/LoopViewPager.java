@@ -135,24 +135,24 @@ public class LoopViewPager extends ViewPager {
     public void setNextItem(boolean smoothScroll) {
         int itemCount = proxyAdapter.getItemCount();
         if (itemCount > 0) {
-            int item = getCurrentItem();
+            int item = super.getCurrentItem();
             item += 1;
-            if (item >= itemCount) {
+            if (item >= itemCount * 3) {
                 item = item % itemCount;
             }
-            setCurrentItemSmooth(item, 1);
+            super.setCurrentItem(item, smoothScroll);
         }
     }
 
     public void setPrevItem(boolean smoothScroll) {
         int itemCount = proxyAdapter.getItemCount();
         if (itemCount > 0) {
-            int item = getCurrentItem();
+            int item = super.getCurrentItem();
             item -= 1;
             if (item < 0) {
                 item = item + itemCount;
             }
-            setCurrentItemSmooth(item, -1);
+            super.setCurrentItem(item, smoothScroll);
         }
     }
 
