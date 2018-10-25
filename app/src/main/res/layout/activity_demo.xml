@@ -16,4 +16,132 @@
         app:title="Demo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:elevation="2dp" />
+
+                <com.takwolf.android.loopviewpager.LoopViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:clipToPadding="false"
+                    app:lvp_looping="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="1dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/switch_looping"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="1dp"
+                            android:padding="16dp"
+                            android:text="循环"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="14sp"
+                            android:background="@android:color/white" />
+
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/switch_auto_play"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="1dp"
+                            android:padding="16dp"
+                            android:text="自动"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="14sp"
+                            android:background="@android:color/white" />
+
+                        <android.support.v7.widget.SwitchCompat
+                            android:id="@+id/switch_padding_mode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="1dp"
+                            android:padding="16dp"
+                            android:text="边距"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="14sp"
+                            android:background="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/btn_go_to_the_prev_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="1dp"
+                            android:padding="16dp"
+                            android:text="上一页"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:gravity="center"
+                            android:background="@android:color/white" />
+
+                        <TextView
+                            android:id="@+id/btn_go_to_the_next_item"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_margin="1dp"
+                            android:padding="16dp"
+                            android:text="下一页"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:gravity="center"
+                            android:background="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/btn_replace_adapter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:padding="16dp"
+                        android:text="动态替换 Adapter"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:background="@android:color/white" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
