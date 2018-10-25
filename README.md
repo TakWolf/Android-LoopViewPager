@@ -8,7 +8,80 @@
 
 An Android ViewPager extension allowing infinite scrolling.
 
-// TODO 开发中
+Android 支持无限循环滚动的 ViewPager，支持特性如下：
+
+- 继承自官方 `ViewPager`，组件可以兼容（但是无限循环模式下，可能会有兼容问题）
+
+- 新的 `RecycledPagerAdapter`，支持子布局回收重用（实现类似于 `RecyclerView`），支持多 `viewType`
+
+- 真循环（通过 有限子布局 + `OnPageChangeListener` 实现，而非 `count` 无限大）
+
+- 支持位置自动修正，支持按照方向滚动（存在部分缺陷）
+
+注意，由于官方组件自身的限制，该方案可用，但并不完美。使用时请谨慎考虑。
+
+## Usage ##
+
+### Gradle ###
+
+``` gradle
+implementation 'com.takwolf.android:loop-viewpager:0.0.1'
+implementation 'com.android.support:support-core-ui:28.0.0'
+```
+
+### Layout ###
+
+``` xml
+<com.takwolf.android.loopviewpagerdemo.widget.HackLoopViewPager
+    android:id="@+id/view_pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:lvp_looping="true" />
+```
+
+### Java ###
+
+请使用 `BannerPagerAdapter` 而非默认的 `PagerAdapter`，用法和 `RecyclerView.Adapter` 类似
+
+``` java
+public class ExamplePagerAdapter extends LoopViewPager.RecycledPagerAdapter<ExamplePagerAdapter.ViewHolder> {
+
+    @Override
+    public int getItemCount() {
+        // TODO
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // TODO
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // TODO
+    }
+
+    class ViewHolder extends LoopViewPager.ViewHolder {
+
+        ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        // TODO
+
+    }
+
+}
+```
+
+设置 `LoopViewPager`
+
+```java
+LoopViewPager viewPager = (LoopViewPager) findViewById(R.id.view_pager);
+ExamplePagerAdapter adapter = new ExamplePagerAdapter();
+viewPager.setDataAdapter(adapter);
+```
 
 ## Author ##
 
