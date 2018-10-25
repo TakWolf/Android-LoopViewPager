@@ -85,13 +85,23 @@ public class LoopViewPager extends ViewPager {
     }
 
     @Override
+    public int getCurrentItem() {
+        return calculateAdapterPosition(super.getCurrentItem());
+    }
+
+    private int filterCurrentItemInput(int item) {
+        if (item < 0) {
+            item = 0;
+        } else if (item >= proxyAdapter.getItemCount()) {
+            item = proxyAdapter.getItemCount() - 1;
+        }
+        return item;
+    }
+
+    @Override
     public void setCurrentItem(int item) {
         if (item != getCurrentItem()) {
-            if (item < 0) {
-                item = 0;
-            } else if (item >= proxyAdapter.getItemCount()) {
-                item = proxyAdapter.getItemCount() - 1;
-            }
+            item = filterCurrentItemInput(item);
             item = calculateLayoutPosition(item);
             super.setCurrentItem(item);
         }
@@ -100,19 +110,59 @@ public class LoopViewPager extends ViewPager {
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
         if (!smoothScroll || item != getCurrentItem()) {
-            if (item < 0) {
-                item = 0;
-            } else if (item >= proxyAdapter.getItemCount()) {
-                item = proxyAdapter.getItemCount() - 1;
-            }
+            item = filterCurrentItemInput(item);
             item = calculateLayoutPosition(item);
             super.setCurrentItem(item, smoothScroll);
         }
     }
 
-    @Override
-    public int getCurrentItem() {
-        return calculateAdapterPosition(super.getCurrentItem());
+    public void setCurrentItemSmooth(int item, int direction) {
+        if (item != getCurrentItem()) {
+            item = filterCurrentItemInput(item);
+            item = calculateLayoutPosition(item);
+            int currentItem = super.getCurrentItem();
+            int itemCount = proxyAdapter.getItemCount();
+            if (looping && currentItem >= itemCount && currentItem < itemCount * 2) {
+                if (direction < 0 && item > currentItem) {
+                    item = item % itemCount;
+                } else if (direction > 0 && item < currentItem) {
+                    item = item + itemCount;
+                }
+            }
+            super.setCurrentItem(item, true);
+        }
+    }
+
+    public void setNextItem(boolean smoothScroll) {
+        int itemCount = proxyAdapter.getItemCount();
+        if (itemCount > 0) {
+            int item = getCurrentItem();
+            item += 1;
+            if (item >= itemCount) {
+                item = item % itemCount;
+            }
+            setCurrentItemSmooth(item, 1);
+        }
+    }
+
+    public void setPrevItem(boolean smoothScroll) {
+        int itemCount = proxyAdapter.getItemCount();
+        if (itemCount > 0) {
+            int item = getCurrentItem();
+            item -= 1;
+            if (item < 0) {
+                item = item + itemCount;
+            }
+            setCurrentItemSmooth(item, -1);
+        }
+    }
+
+    public void setNextItem() {
+        setNextItem(true);
+    }
+
+    public void setPrevItem() {
+        setPrevItem(true);
     }
 
     @NonNull

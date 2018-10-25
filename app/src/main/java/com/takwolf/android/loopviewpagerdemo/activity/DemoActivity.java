@@ -110,18 +110,14 @@ public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayou
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick(R.id.btn_go_to_the_prev_item)
-    void onBtnGoToThePrevItemClick() {
-
-        // TODO
-
+    @OnClick(R.id.btn_set_prev_item)
+    void onBtnSetPrevItemClick() {
+        viewPager.setPrevItem();
     }
 
-    @OnClick(R.id.btn_go_to_the_next_item)
-    void onBtnGoToTheNextItemClick() {
-
-        // TODO
-
+    @OnClick(R.id.btn_set_next_item)
+    void onBtnSetNextItemClick() {
+        viewPager.setNextItem();
     }
 
     @OnClick(R.id.btn_replace_adapter)
