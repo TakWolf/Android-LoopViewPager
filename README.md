@@ -8,17 +8,23 @@
 
 An Android ViewPager extension allowing infinite scrolling.
 
-Android 支持无限循环滚动的 ViewPager，支持特性如下：
+Android 支持无限循环滚动的 ViewPager，特性如下：
 
-- 继承自官方 `ViewPager`，组件可以兼容（但是无限循环模式下，可能会有兼容问题）
+- 继承自官方 `ViewPager`，可兼容大部分组件（无限模式下，边界部分的 UI 可能需要做一点适配）
 
-- 新的 `RecycledPagerAdapter`，支持子布局回收重用（实现类似于 `RecyclerView`），支持多 `viewType`
+- 新的 `RecycledPagerAdapter`，类似于 `RecyclerView.Adapter` 的实现，支持数据动态变化，支持子布局回收重用，支持多类型子布局
 
-- 真循环（通过 有限子布局 + `OnPageChangeListener` 实现，而非 `count` 无限大）
+- 无限循环功能通过有限的子布局 + `OnPageChangeListener` 实现，而非通过让子布局数量逻辑无限大
 
-- 支持位置自动修正，支持按照方向滚动（存在部分缺陷）
+- 布局位置自动修正，业务端无需特殊处理
 
-注意，由于官方组件自身的限制，该方案可用，但并不完美。使用时请谨慎考虑。
+- 支持子布局按方向滚动（部分场景）
+
+- 支持 `ViewPager` 内边距和子布局外边距
+
+该组件可以用于实现大部分应用轮播图的需求场景，也可以用于实现横向变长元素 `Pager` 视图（更推荐使用 `RecyclerView` + `PagerSnapHelper` 实现）
+
+注意，该组件仅实现无限循环和回收布局功能，并不包含 `TabLayout`、指示器控件、轮播定时、纵向滚动功能。
 
 ## Usage ##
 
