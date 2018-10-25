@@ -747,8 +747,10 @@ public class LoopViewPager extends ViewPager {
         private void fixViewPagerCurrentPosition() {
             if (isLooping() && positionOffsetPixels == 0) {
                 int itemCount = getProxyAdapter().getItemCount();
-                if (position <= itemCount - 1 || position >= itemCount * 2) {
-                    LoopViewPager.super.setCurrentItem(position % itemCount + itemCount, false);
+                if (itemCount > 0) {
+                    if (position <= itemCount - 1 || position >= itemCount * 2) {
+                        LoopViewPager.super.setCurrentItem(position % itemCount + itemCount, false);
+                    }
                 }
             }
         }
