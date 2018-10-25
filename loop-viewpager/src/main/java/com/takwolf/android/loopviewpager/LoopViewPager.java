@@ -699,7 +699,7 @@ public class LoopViewPager extends ViewPager {
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             this.position = position;
             this.positionOffsetPixels = positionOffsetPixels;
-            if (scrollState == SCROLL_STATE_DRAGGING) {
+            if (scrollState == SCROLL_STATE_DRAGGING || scrollState == SCROLL_STATE_SETTLING) {
                 fixViewPagerCurrentPosition();
             }
 
