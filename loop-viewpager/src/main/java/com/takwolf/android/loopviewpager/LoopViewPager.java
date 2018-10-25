@@ -58,10 +58,10 @@ public class LoopViewPager extends ViewPager {
 
     public void setLooping(boolean looping) {
         if (this.looping != looping) {
-            int position = getCurrentItem();
+            int item = getCurrentItem();
             this.looping = looping;
             proxyAdapter.notifyDataSetChanged();
-            setCurrentItem(position);
+            setCurrentItem(item, false);
         }
     }
 
