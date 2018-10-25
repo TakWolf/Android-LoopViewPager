@@ -2,7 +2,6 @@ package com.takwolf.android.loopviewpager;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.database.DataSetObservable;
 import android.database.DataSetObserver;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
