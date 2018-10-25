@@ -47,7 +47,7 @@ implementation 'com.android.support:support-core-ui:28.0.0'
 
 ### Java ###
 
-请使用 `BannerPagerAdapter` 而非默认的 `PagerAdapter`，用法和 `RecyclerView.Adapter` 类似
+请使用 `RecycledPagerAdapter` 而非 `PagerAdapter`，用法和 `RecyclerView.Adapter` 类似
 
 ``` java
 public class ExamplePagerAdapter extends LoopViewPager.RecycledPagerAdapter<ExamplePagerAdapter.ViewHolder> {
