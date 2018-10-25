@@ -69,7 +69,7 @@ public class LoopViewPager extends ViewPager {
     }
 
     private int calculateAdapterPosition(int layoutPosition) {
-        if (looping) {
+        if (looping && proxyAdapter.getItemCount() > 0) {
             return layoutPosition % proxyAdapter.getItemCount();
         } else {
             return layoutPosition;
@@ -77,7 +77,7 @@ public class LoopViewPager extends ViewPager {
     }
 
     private int calculateLayoutPosition(int adapterPosition) {
-        if (looping) {
+        if (looping && proxyAdapter.getItemCount() > 0) {
             return adapterPosition + proxyAdapter.getItemCount();
         } else {
             return adapterPosition;
@@ -86,33 +86,33 @@ public class LoopViewPager extends ViewPager {
 
     @Override
     public void setCurrentItem(int item) {
-        if (item < 0) {
-            item = 0;
-        } else if (item >= proxyAdapter.getItemCount()) {
-            item = proxyAdapter.getItemCount() - 1;
+        if (item != getCurrentItem()) {
+            if (item < 0) {
+                item = 0;
+            } else if (item >= proxyAdapter.getItemCount()) {
+                item = proxyAdapter.getItemCount() - 1;
+            }
+            item = calculateLayoutPosition(item);
+            super.setCurrentItem(item);
         }
-        item = calculateLayoutPosition(item);
-        super.setCurrentItem(item);
     }
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
-        if (item < 0) {
-            item = 0;
-        } else if (item >= proxyAdapter.getItemCount()) {
-            item = proxyAdapter.getItemCount() - 1;
+        if (!smoothScroll || item != getCurrentItem()) {
+            if (item < 0) {
+                item = 0;
+            } else if (item >= proxyAdapter.getItemCount()) {
+                item = proxyAdapter.getItemCount() - 1;
+            }
+            item = calculateLayoutPosition(item);
+            super.setCurrentItem(item, smoothScroll);
         }
-        item = calculateLayoutPosition(item);
-        super.setCurrentItem(item, smoothScroll);
     }
 
     @Override
     public int getCurrentItem() {
-        if (looping) {
-            return super.getCurrentItem() % proxyAdapter.getItemCount();
-        } else {
-            return super.getCurrentItem();
-        }
+        return calculateAdapterPosition(super.getCurrentItem());
     }
 
     @NonNull
@@ -619,6 +619,10 @@ public class LoopViewPager extends ViewPager {
         @Nullable
         private OnPageChangeListener onPageChangeListener;
 
+        private int position = 0;
+        private int positionOffsetPixels = 0;
+        private int scrollState = SCROLL_STATE_IDLE;
+
         void addOnPageChangeListener(@NonNull OnPageChangeListener listener) {
             if (onPageChangeListenerList == null) {
                 onPageChangeListenerList = new ArrayList<>();
@@ -644,14 +648,12 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if (isLooping()) {
-                int itemCount = getProxyAdapter().getItemCount();
-                if (positionOffsetPixels == 0) {
-                    if (position <= itemCount - 1 || position >= itemCount * 2) {
-                        LoopViewPager.super.setCurrentItem(position % itemCount + itemCount, false);
-                    }
-                }
+            this.position = position;
+            this.positionOffsetPixels = positionOffsetPixels;
+            if (scrollState == SCROLL_STATE_DRAGGING) {
+                fixViewPagerCurrentPosition();
             }
+
             position = calculateAdapterPosition(position);
             if (onPageChangeListenerList != null && !onPageChangeListenerList.isEmpty()) {
                 for (ViewPager.OnPageChangeListener onPageChangeListener : onPageChangeListenerList) {
@@ -678,6 +680,11 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onPageScrollStateChanged(int state) {
+            scrollState = state;
+            if (state == SCROLL_STATE_IDLE) {
+                fixViewPagerCurrentPosition();
+            }
+
             if (onPageChangeListenerList != null && !onPageChangeListenerList.isEmpty()) {
                 for (ViewPager.OnPageChangeListener onPageChangeListener : onPageChangeListenerList) {
                     onPageChangeListener.onPageScrollStateChanged(state);
@@ -685,6 +692,15 @@ public class LoopViewPager extends ViewPager {
             }
             if (onPageChangeListener != null) {
                 onPageChangeListener.onPageScrollStateChanged(state);
+            }
+        }
+
+        private void fixViewPagerCurrentPosition() {
+            if (isLooping() && positionOffsetPixels == 0) {
+                int itemCount = getProxyAdapter().getItemCount();
+                if (position <= itemCount - 1 || position >= itemCount * 2) {
+                    LoopViewPager.super.setCurrentItem(position % itemCount + itemCount, false);
+                }
             }
         }
 
