@@ -95,7 +95,7 @@ public class BannerPagerAdapter extends LoopViewPager.RecycledPagerAdapter<Banne
         void bind(int position) {
             Banner banner = bannerList.get(position);
             Glide.with(activity).load(banner.getImage()).into(imgImage);
-            tvTitle.setText(getAdapterPosition() + " - " + getLayoutPosition() + " - " + bannerList.size() + " - " + bannerList.size() * 3);
+            tvTitle.setText(getAdapterPosition() + " - " + getLayoutPosition());
             FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) layoutCard.getLayoutParams();
             if (layoutParams != null) {
                 if (isPaddingMode()) {
