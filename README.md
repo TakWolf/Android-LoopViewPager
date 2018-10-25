@@ -32,7 +32,7 @@ implementation 'com.android.support:support-core-ui:28.0.0'
 ### Layout ###
 
 ``` xml
-<com.takwolf.android.loopviewpagerdemo.widget.HackLoopViewPager
+<com.takwolf.android.loopviewpager.LoopViewPager
     android:id="@+id/view_pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
