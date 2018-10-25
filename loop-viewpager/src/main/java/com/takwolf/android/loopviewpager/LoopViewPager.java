@@ -166,14 +166,13 @@ public class LoopViewPager extends ViewPager {
     }
 
     /**
-     * see {@link #getProxyAdapter()}
      * see {@link #getDataAdapter()}
      */
     @Deprecated
     @Nullable
     @Override
     public PagerAdapter getAdapter() {
-        return proxyAdapter;
+        return getDataAdapter();
     }
 
     /**
@@ -182,7 +181,11 @@ public class LoopViewPager extends ViewPager {
     @Deprecated
     @Override
     public void setAdapter(@Nullable PagerAdapter adapter) {
-        throw new UnsupportedOperationException("Function is unsupported.");
+        if (adapter == null || adapter instanceof RecycledPagerAdapter) {
+            setDataAdapter((RecycledPagerAdapter) adapter);
+        } else {
+            throw new UnsupportedOperationException("Adapter must extends RecycledPagerAdapter.");
+        }
     }
 
     @Override
@@ -296,21 +299,28 @@ public class LoopViewPager extends ViewPager {
 
     }
 
-    public static abstract class RecycledPagerAdapter<VH extends ViewHolder> {
+    public static abstract class RecycledPagerAdapter<VH extends ViewHolder> extends PagerAdapter {
 
-        private final DataSetObservable dataSetObservable = new DataSetObservable();
+        // ============== DataSetObserver ==============
 
-        public final void notifyDataSetChanged() {
-            dataSetObservable.notifyChanged();
+        @Nullable
+        private DataSetObserver dataSetObserver;
+
+        private void setDataSetObserver(@Nullable DataSetObserver dataSetObserver) {
+            this.dataSetObserver = dataSetObserver;
         }
 
-        public final void registerDataSetObserver(@NonNull DataSetObserver observer) {
-            dataSetObservable.registerObserver(observer);
+        @Override
+        public void notifyDataSetChanged() {
+            synchronized(this) {
+                if (dataSetObserver != null) {
+                    dataSetObserver.onChanged();
+                }
+            }
+            super.notifyDataSetChanged();
         }
 
-        public final void unregisterDataSetObserver(@NonNull DataSetObserver observer) {
-            dataSetObservable.unregisterObserver(observer);
-        }
+        // ============== Callbacks ==============
 
         public abstract int getItemCount();
 
@@ -333,21 +343,51 @@ public class LoopViewPager extends ViewPager {
 
         public void onDetachedFromViewPager(@NonNull LoopViewPager viewPager) {}
 
-        @Nullable
-        public CharSequence getPageTitle(int position) {
-            return null;
+        // ============== Deprecated ==============
+
+        @Deprecated
+        @Override
+        public final int getCount() {
+            return getItemCount();
         }
 
-        public float getPageWidth(int position) {
-            return 1.0f;
+        @Deprecated
+        @Override
+        public final int getItemPosition(@NonNull Object object) {
+            return POSITION_NONE;
         }
 
-        @Nullable
-        public Parcelable saveState() {
-            return null;
+        @Deprecated
+        @NonNull
+        @Override
+        public final Object instantiateItem(@NonNull ViewGroup container, int position) {
+            throw new UnsupportedOperationException("The function 'instantiateItem' has not been supported.");
         }
 
-        public void restoreState(@Nullable Parcelable state, @Nullable ClassLoader loader) {}
+        @Deprecated
+        @Override
+        public final void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            throw new UnsupportedOperationException("The function 'destroyItem' has not been supported.");
+        }
+
+        @Deprecated
+        @NonNull
+        @Override
+        public final Object instantiateItem(@NonNull View container, int position) {
+            throw new UnsupportedOperationException("The function 'instantiateItem' has not been supported.");
+        }
+
+        @Deprecated
+        @Override
+        public final void destroyItem(@NonNull View container, int position, @NonNull Object object) {
+            throw new UnsupportedOperationException("The function 'destroyItem' has not been supported.");
+        }
+
+        @Deprecated
+        @Override
+        public final boolean isViewFromObject(@NonNull View view, @NonNull Object o) {
+            throw new UnsupportedOperationException("The function 'isViewFromObject' has not been supported.");
+        }
 
     }
 
@@ -377,12 +417,12 @@ public class LoopViewPager extends ViewPager {
 
         void setAdapter(@Nullable RecycledPagerAdapter adapter) {
             if (this.adapter != null) {
-                this.adapter.unregisterDataSetObserver(dataSetObserver);
+                this.adapter.setDataSetObserver(null);
                 this.adapter.onDetachedFromViewPager(LoopViewPager.this);
             }
             this.adapter = adapter;
             if (adapter != null) {
-                adapter.registerDataSetObserver(dataSetObserver);
+                adapter.setDataSetObserver(dataSetObserver);
                 adapter.onAttachedToViewPager(LoopViewPager.this);
             }
         }
@@ -450,12 +490,13 @@ public class LoopViewPager extends ViewPager {
             return view == holder.getItemView();
         }
 
+        // ============== Transmit ==============
+
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
             if (adapter != null) {
-                int adapterPosition = calculateAdapterPosition(position);
-                return adapter.getPageTitle(adapterPosition);
+                return adapter.getPageTitle(position);
             } else {
                 return super.getPageTitle(position);
             }
@@ -464,8 +505,7 @@ public class LoopViewPager extends ViewPager {
         @Override
         public float getPageWidth(int position) {
             if (adapter != null) {
-                int adapterPosition = calculateAdapterPosition(position);
-                return adapter.getPageWidth(adapterPosition);
+                return adapter.getPageWidth(position);
             } else {
                 return super.getPageWidth(position);
             }
@@ -485,6 +525,64 @@ public class LoopViewPager extends ViewPager {
         public void restoreState(@Nullable Parcelable state, @Nullable ClassLoader loader) {
             if (adapter != null) {
                 adapter.restoreState(state, loader);
+            }
+        }
+
+        @Deprecated
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull View container, int position) {
+            return instantiateItem((ViewPager) container, position);
+        }
+
+        @Deprecated
+        @Override
+        public void destroyItem(@NonNull View container, int position, @NonNull Object object) {
+            destroyItem((ViewPager) container, position, object);
+        }
+
+        @Override
+        public void startUpdate(@NonNull ViewGroup container) {
+            if (adapter != null) {
+                adapter.startUpdate(container);
+            }
+        }
+
+        @Override
+        public void finishUpdate(@NonNull ViewGroup container) {
+            if (adapter != null) {
+                adapter.finishUpdate(container);
+            }
+        }
+
+        @Deprecated
+        @Override
+        public void startUpdate(@NonNull View container) {
+            if (adapter != null) {
+                adapter.startUpdate(container);
+            }
+        }
+
+        @Deprecated
+        @Override
+        public void finishUpdate(@NonNull View container) {
+            if (adapter != null) {
+                adapter.finishUpdate(container);
+            }
+        }
+
+        @Override
+        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            if (adapter != null) {
+                adapter.setPrimaryItem(container, position, object);
+            }
+        }
+
+        @Deprecated
+        @Override
+        public void setPrimaryItem(@NonNull View container, int position, @NonNull Object object) {
+            if (adapter != null) {
+                adapter.setPrimaryItem(container, position, object);
             }
         }
 

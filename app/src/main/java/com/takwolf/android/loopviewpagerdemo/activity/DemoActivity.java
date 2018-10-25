@@ -3,14 +3,11 @@ package com.takwolf.android.loopviewpagerdemo.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.widget.Spinner;
 
 import com.takwolf.android.loopviewpager.LoopViewPager;
 import com.takwolf.android.loopviewpagerdemo.R;
@@ -23,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -67,7 +63,7 @@ public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayou
         viewPager.setDataAdapter(adapter);
         viewPager.setFillOffscreenPageLimit();
 
-        // tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
         switchLooping.setChecked(viewPager.isLooping());
 
@@ -117,13 +113,14 @@ public class DemoActivity extends AppCompatActivity implements SwipeRefreshLayou
     @OnClick(R.id.btn_go_to_the_prev_item)
     void onBtnGoToThePrevItemClick() {
 
-        viewPager.setCurrentItem(0);
+        // TODO
+
     }
 
     @OnClick(R.id.btn_go_to_the_next_item)
     void onBtnGoToTheNextItemClick() {
 
-        viewPager.setCurrentItem(adapter.getItemCount() - 1);
+        // TODO
 
     }
 
