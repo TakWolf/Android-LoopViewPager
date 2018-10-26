@@ -1,9 +1,9 @@
 package com.takwolf.android.loopviewpagerdemo.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.takwolf.android.loopviewpagerdemo.R;
 
