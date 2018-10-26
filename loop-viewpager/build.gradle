@@ -10,7 +10,7 @@ ext {
     groupId = 'com.takwolf.android'
     artifactId = 'loop-viewpager'
 
-    libraryVersion = '0.0.1'
+    libraryVersion = '0.0.2'
     libraryName = 'Android - LoopViewPager'
     libraryDescription = 'An Android ViewPager extension allowing infinite scrolling.'
 
