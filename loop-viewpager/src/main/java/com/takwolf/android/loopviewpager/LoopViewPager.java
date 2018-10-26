@@ -527,7 +527,7 @@ public class LoopViewPager extends ViewPager {
             }
         }
 
-        public int getOldItemCount() {
+        int getOldItemCount() {
             return oldItemCount;
         }
 
