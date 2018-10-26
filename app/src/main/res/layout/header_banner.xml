@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.takwolf.android.loopviewpagerdemo.widget.HackLoopViewPager
+    <com.takwolf.android.loopviewpager.NoAnimationResetLoopViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="200dp"

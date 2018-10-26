@@ -1,4 +1,4 @@
-package com.takwolf.android.loopviewpagerdemo.widget;
+package com.takwolf.android.loopviewpager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,15 +6,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.takwolf.android.loopviewpager.LoopViewPager;
+public class NoAnimationResetLoopViewPager extends LoopViewPager {
 
-public class HackLoopViewPager extends LoopViewPager {
-
-    public HackLoopViewPager(@NonNull Context context) {
+    public NoAnimationResetLoopViewPager(@NonNull Context context) {
         super(context);
     }
 
-    public HackLoopViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public NoAnimationResetLoopViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
