@@ -68,19 +68,23 @@ public class LoopViewPager extends ViewPager {
     }
 
     private int calculateAdapterPosition(int layoutPosition) {
-        if (looping && proxyAdapter.getItemCount() > 0) {
-            return layoutPosition % proxyAdapter.getItemCount();
-        } else {
-            return layoutPosition;
+        if (looping) {
+            int itemCount = proxyAdapter.getOldItemCount();
+            if (itemCount > 0) {
+                return layoutPosition % itemCount;
+            }
         }
+        return layoutPosition;
     }
 
     private int calculateLayoutPosition(int adapterPosition) {
-        if (looping && proxyAdapter.getItemCount() > 0) {
-            return adapterPosition + proxyAdapter.getItemCount();
-        } else {
-            return adapterPosition;
+        if (looping) {
+            int itemCount = proxyAdapter.getOldItemCount();
+            if (itemCount > 0) {
+                return adapterPosition + itemCount;
+            }
         }
+        return adapterPosition;
     }
 
     @Override
@@ -472,16 +476,34 @@ public class LoopViewPager extends ViewPager {
         @Nullable
         private RecycledPagerAdapter adapter;
 
+        private int oldItemCount = 0;
+
         private final DataSetObserver dataSetObserver = new DataSetObserver() {
 
             @Override
             public void onChanged() {
-                notifyDataSetChanged();
+                executeUpdate();
             }
 
             @Override
             public void onInvalidated() {
+                executeUpdate();
+            }
+
+            private void executeUpdate() {
+                boolean needFixItem = false;
+                int item = getCurrentItem();
+                int newItemCount = getItemCount();
+                if (oldItemCount != newItemCount) {
+                    oldItemCount = newItemCount;
+                    if (newItemCount > 0) {
+                        needFixItem = true;
+                    }
+                }
                 notifyDataSetChanged();
+                if (needFixItem) {
+                    setCurrentItem(item, false);
+                }
             }
 
         };
@@ -495,12 +517,18 @@ public class LoopViewPager extends ViewPager {
             if (this.adapter != null) {
                 this.adapter.setDataSetObserver(null);
                 this.adapter.onDetachedFromViewPager(LoopViewPager.this);
+                oldItemCount = 0;
             }
             this.adapter = adapter;
             if (adapter != null) {
                 adapter.setDataSetObserver(dataSetObserver);
                 adapter.onAttachedToViewPager(LoopViewPager.this);
+                oldItemCount = adapter.getItemCount();
             }
+        }
+
+        public int getOldItemCount() {
+            return oldItemCount;
         }
 
         public int getItemCount() {
