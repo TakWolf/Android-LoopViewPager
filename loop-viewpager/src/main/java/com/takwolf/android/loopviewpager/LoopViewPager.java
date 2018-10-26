@@ -119,13 +119,17 @@ public class LoopViewPager extends ViewPager {
         if (item != getCurrentItem()) {
             item = filterCurrentItemInput(item);
             item = calculateLayoutPosition(item);
-            int currentItem = super.getCurrentItem();
-            int itemCount = proxyAdapter.getItemCount();
-            if (looping && currentItem >= itemCount && currentItem < itemCount * 2) {
-                if (direction < 0 && item > currentItem) {
-                    item = item % itemCount;
-                } else if (direction > 0 && item < currentItem) {
-                    item = item + itemCount;
+            if (looping) {
+                int itemCount = proxyAdapter.getItemCount();
+                if (itemCount > 0) {
+                    int currentItem = super.getCurrentItem();
+                    if (currentItem >= itemCount && currentItem < itemCount * 2) {
+                        if (direction < 0 && item > currentItem) {
+                            item = item % itemCount;
+                        } else if (direction > 0 && item < currentItem) {
+                            item = item + itemCount;
+                        }
+                    }
                 }
             }
             super.setCurrentItem(item, true);
