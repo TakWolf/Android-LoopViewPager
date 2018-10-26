@@ -1,16 +1,21 @@
-package com.takwolf.android.loopviewpagerdemo.listener;
+package com.takwolf.android.loopviewpager;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-public final class PageTransformerWrapper implements ViewPager.PageTransformer {
+public final class FixPositionPageTransformer implements ViewPager.PageTransformer {
 
     @NonNull
     private final ViewPager.PageTransformer pageTransformer;
 
-    public PageTransformerWrapper(@NonNull ViewPager.PageTransformer pageTransformer) {
+    public FixPositionPageTransformer(@NonNull ViewPager.PageTransformer pageTransformer) {
         this.pageTransformer = pageTransformer;
+    }
+
+    @NonNull
+    public ViewPager.PageTransformer getPageTransformer() {
+        return pageTransformer;
     }
 
     @Override
