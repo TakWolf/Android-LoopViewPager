@@ -13,8 +13,6 @@ import com.takwolf.android.loopviewpager.LoopViewPager;
 import com.takwolf.android.loopviewpagerdemo.R;
 import com.takwolf.android.loopviewpagerdemo.adapter.BannerPagerAdapter;
 import com.takwolf.android.loopviewpagerdemo.listener.NavigationFinishClickListener;
-import com.takwolf.android.loopviewpager.FixPositionPageTransformer;
-import com.takwolf.android.loopviewpagerdemo.listener.RotateDownTransformer;
 import com.takwolf.android.loopviewpagerdemo.model.Banner;
 import com.takwolf.android.loopviewpagerdemo.util.HandlerUtils;
 
@@ -56,12 +54,11 @@ public class NormalDemoActivity extends AppCompatActivity implements SwipeRefres
         setContentView(R.layout.activity_normal_demo);
         ButterKnife.bind(this);
 
-        gapSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics());
+        gapSpace = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, getResources().getDisplayMetrics()));
 
         toolbar.setNavigationOnClickListener(new NavigationFinishClickListener(this));
 
-        viewPager.setPageTransformer(true, new FixPositionPageTransformer(new RotateDownTransformer()));
-        adapter = new BannerPagerAdapter(this, gapSpace);
+        adapter = new BannerPagerAdapter(this, gapSpace, true);
         adapter.getBannerList().addAll(Banner.buildList());
         viewPager.setDataAdapter(adapter);
         viewPager.setFillOffscreenPageLimit();
@@ -69,6 +66,7 @@ public class NormalDemoActivity extends AppCompatActivity implements SwipeRefres
         tabLayout.setupWithViewPager(viewPager);
 
         switchLooping.setChecked(viewPager.isLooping());
+        switchPaddingMode.setChecked(adapter.isPaddingMode());
 
         refreshLayout.setColorSchemeResources(R.color.color_accent);
         refreshLayout.setOnRefreshListener(this);
@@ -125,7 +123,7 @@ public class NormalDemoActivity extends AppCompatActivity implements SwipeRefres
 
     @OnClick(R.id.btn_replace_adapter)
     void onBtnReplaceAdapterClick() {
-        adapter = new BannerPagerAdapter(this, gapSpace);
+        adapter = new BannerPagerAdapter(this, gapSpace, switchPaddingMode.isChecked());
         adapter.getBannerList().addAll(Banner.buildList());
         adapter.setPaddingMode(switchPaddingMode.isChecked());
         viewPager.setDataAdapter(adapter);

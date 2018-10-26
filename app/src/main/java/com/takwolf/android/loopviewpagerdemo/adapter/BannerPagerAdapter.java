@@ -31,10 +31,11 @@ public class BannerPagerAdapter extends LoopViewPager.RecycledPagerAdapter<Banne
 
     private boolean paddingMode = false;
 
-    public BannerPagerAdapter(@NonNull Activity activity, int gapSpace) {
+    public BannerPagerAdapter(@NonNull Activity activity, int gapSpace, boolean paddingMode) {
         this.activity = activity;
         inflater = LayoutInflater.from(activity);
         this.gapSpace = gapSpace;
+        this.paddingMode = paddingMode;
     }
 
     public int getGapSpace() {

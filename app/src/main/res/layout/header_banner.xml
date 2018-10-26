@@ -8,6 +8,10 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
         android:clipToPadding="false"
         app:lvp_looping="true" />
 

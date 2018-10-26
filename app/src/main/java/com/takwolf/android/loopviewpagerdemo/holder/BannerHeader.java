@@ -2,6 +2,7 @@ package com.takwolf.android.loopviewpagerdemo.holder;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -28,7 +29,9 @@ public class BannerHeader {
         recyclerView.addHeaderView(headerView);
         ButterKnife.bind(this, headerView);
 
-        adapter = new BannerPagerAdapter(activity, 0);
+        int gapSpace = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8, activity.getResources().getDisplayMetrics()));
+
+        adapter = new BannerPagerAdapter(activity, gapSpace, true);
         viewPager.setDataAdapter(adapter);
     }
 
