@@ -16,6 +16,15 @@ import butterknife.ButterKnife;
 
 public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHolder> {
 
+    private static final int[] BACKGROUND_COLORS = {
+            0x88ff0000,
+            0x8800ff00,
+            0x880000ff,
+            0x88ffff00,
+            0x88ff00ff,
+            0x8800ffff
+    };
+
     private final LayoutInflater inflater;
     private int count;
 
@@ -40,7 +49,7 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(String.valueOf(position));
+        holder.bind(position);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -53,8 +62,9 @@ public class DataListAdapter extends RecyclerView.Adapter<DataListAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        void bind(String text) {
-            tvText.setText(text);
+        void bind(int position) {
+            tvText.setText(String.valueOf(position));
+            tvText.setBackgroundColor(BACKGROUND_COLORS[position % BACKGROUND_COLORS.length]);
         }
 
     }
