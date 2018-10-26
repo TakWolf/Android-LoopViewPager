@@ -20,7 +20,9 @@ Android 支持无限循环滚动的 ViewPager，特性如下：
 
 - 支持子布局按方向滚动（部分场景）
 
-- 支持 `ViewPager` 内边距和子布局外边距
+- 提供 `NoAnimationResetLoopViewPager` 用来解决 `ViewPager` 在列表视图（RecyclerView 或 ListView 等）中头部或者单例模式下，由于视图状态重置导致的动画问题
+
+- 支持 `ViewPager` 内边距和子布局外边距，提供 `FixPositionPageTransformer` 解决官方组件距离计算 BUG
 
 该组件可以用于实现大部分应用轮播图的需求场景，也可以用于实现横向变长元素 `Pager` 视图（更推荐使用 `RecyclerView` + `PagerSnapHelper` 实现）
 
