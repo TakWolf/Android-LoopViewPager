@@ -40,7 +40,6 @@ public class BannerHeader {
         adapter.getBannerList().addAll(bannerList);
         adapter.notifyDataSetChanged();
         viewPager.setFillOffscreenPageLimit();
-        viewPager.setCurrentItem(0, false);
     }
 
 }
