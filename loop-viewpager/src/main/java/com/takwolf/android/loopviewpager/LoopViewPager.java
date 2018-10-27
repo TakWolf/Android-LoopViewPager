@@ -295,7 +295,9 @@ public class LoopViewPager extends ViewPager {
 
     public static abstract class ViewHolder {
 
+        @NonNull
         private final View itemView;
+
         private int itemViewType = INVALID_TYPE;
         private int layoutPosition = NO_POSITION;
         private int adapterPosition = NO_POSITION;
