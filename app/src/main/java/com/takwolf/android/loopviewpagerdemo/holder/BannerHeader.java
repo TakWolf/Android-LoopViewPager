@@ -1,10 +1,11 @@
 package com.takwolf.android.loopviewpagerdemo.holder;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.takwolf.android.hfrecyclerview.HeaderAndFooterRecyclerView;
 import com.takwolf.android.loopviewpager.LoopViewPager;

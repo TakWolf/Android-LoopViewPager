@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,12 +16,12 @@
         app:title="Normal Demo"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -30,11 +30,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <android.support.design.widget.TabLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/white"
                     android:elevation="2dp" />
 
                 <com.takwolf.android.loopviewpager.LoopViewPager
@@ -47,7 +46,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="1dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -55,41 +53,38 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switch_looping"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="1dp"
-                            android:padding="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
                             android:text="循环"
-                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"
-                            android:background="@android:color/white" />
+                            android:textColor="?attr/colorPrimary" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switch_auto_play"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="1dp"
-                            android:padding="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
                             android:text="自动"
-                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"
-                            android:background="@android:color/white" />
+                            android:textColor="?attr/colorPrimary" />
 
-                        <android.support.v7.widget.SwitchCompat
+                        <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/switch_padding_mode"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="1dp"
-                            android:padding="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
                             android:text="边距"
-                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="14sp"
-                            android:background="@android:color/white" />
+                            android:textColor="?attr/colorPrimary" />
 
                     </LinearLayout>
 
@@ -98,50 +93,40 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
+                        <Button style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:id="@+id/btn_set_prev_item"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="1dp"
-                            android:padding="16dp"
                             android:text="上一页"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:gravity="center"
-                            android:background="@android:color/white" />
+                            android:textAllCaps="false"
+                            android:textSize="14sp" />
 
-                        <TextView
+                        <Button style="@style/Widget.MaterialComponents.Button.TextButton"
                             android:id="@+id/btn_set_next_item"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:layout_margin="1dp"
-                            android:padding="16dp"
                             android:text="下一页"
-                            android:textColor="?android:attr/textColorPrimary"
-                            android:gravity="center"
-                            android:background="@android:color/white" />
+                            android:textAllCaps="false"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
-                    <TextView
+                    <Button style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:id="@+id/btn_replace_adapter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:padding="16dp"
                         android:text="动态替换 Adapter"
-                        android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:background="@android:color/white" />
+                        android:textAllCaps="false"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

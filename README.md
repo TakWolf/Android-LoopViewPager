@@ -31,8 +31,8 @@ Android 支持无限循环滚动的 ViewPager，特性如下：
 ### Gradle ###
 
 ``` gradle
-implementation 'com.takwolf.android:loop-viewpager:0.0.2'
-implementation 'com.android.support:support-core-ui:28.0.0'
+implementation 'androidx.viewpager:viewpager:1.0.0'
+implementation 'com.takwolf.android:loop-viewpager:x.y.z'
 ```
 
 ### Layout ###

@@ -1,11 +1,12 @@
 package com.takwolf.android.loopviewpagerdemo.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.takwolf.android.hfrecyclerview.HeaderAndFooterRecyclerView;
 import com.takwolf.android.loopviewpagerdemo.R;
@@ -15,6 +16,7 @@ import com.takwolf.android.loopviewpagerdemo.listener.NavigationFinishClickListe
 import com.takwolf.android.loopviewpagerdemo.model.Banner;
 import com.takwolf.android.loopviewpagerdemo.util.HandlerUtils;
 import com.takwolf.android.loopviewpagerdemo.util.RandomUtils;
+import com.takwolf.android.loopviewpagerdemo.util.ResUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +48,7 @@ public class ListHeaderActivity extends AppCompatActivity implements SwipeRefres
         adapter = new DataListAdapter(this);
         recyclerView.setAdapter(adapter);
 
-        refreshLayout.setColorSchemeResources(R.color.color_accent);
+        refreshLayout.setColorSchemeColors(ResUtils.getThemeAttrColor(this, R.attr.colorSecondary));
         refreshLayout.setOnRefreshListener(this);
         refreshLayout.setRefreshing(true);
         onRefresh();
@@ -54,16 +56,11 @@ public class ListHeaderActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        HandlerUtils.handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                bannerHeader.setBannerListAndNotify(Banner.buildList());
-                adapter.setCount(Math.abs(RandomUtils.random.nextInt()) % 50);
-                adapter.notifyDataSetChanged();
-                refreshLayout.setRefreshing(false);
-            }
-
+        HandlerUtils.handler.postDelayed(() -> {
+            bannerHeader.setBannerListAndNotify(Banner.buildList());
+            adapter.setCount(Math.abs(RandomUtils.random.nextInt()) % 50);
+            adapter.notifyDataSetChanged();
+            refreshLayout.setRefreshing(false);
         }, 1000);
     }
 

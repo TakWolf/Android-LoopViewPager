@@ -1,20 +1,22 @@
 package com.takwolf.android.loopviewpagerdemo.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.tabs.TabLayout;
 import com.takwolf.android.loopviewpager.LoopViewPager;
 import com.takwolf.android.loopviewpagerdemo.R;
 import com.takwolf.android.loopviewpagerdemo.adapter.BannerPagerAdapter;
 import com.takwolf.android.loopviewpagerdemo.listener.NavigationFinishClickListener;
 import com.takwolf.android.loopviewpagerdemo.model.Banner;
 import com.takwolf.android.loopviewpagerdemo.util.HandlerUtils;
+import com.takwolf.android.loopviewpagerdemo.util.ResUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,23 +70,18 @@ public class NormalDemoActivity extends AppCompatActivity implements SwipeRefres
         switchLooping.setChecked(viewPager.isLooping());
         switchPaddingMode.setChecked(adapter.isPaddingMode());
 
-        refreshLayout.setColorSchemeResources(R.color.color_accent);
+        refreshLayout.setColorSchemeColors(ResUtils.getThemeAttrColor(this, R.attr.colorSecondary));
         refreshLayout.setOnRefreshListener(this);
     }
 
     @Override
     public void onRefresh() {
-        HandlerUtils.handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                adapter.getBannerList().clear();
-                adapter.getBannerList().addAll(Banner.buildList());
-                adapter.notifyDataSetChanged();
-                viewPager.setFillOffscreenPageLimit();
-                refreshLayout.setRefreshing(false);
-            }
-
+        HandlerUtils.handler.postDelayed(() -> {
+            adapter.getBannerList().clear();
+            adapter.getBannerList().addAll(Banner.buildList());
+            adapter.notifyDataSetChanged();
+            viewPager.setFillOffscreenPageLimit();
+            refreshLayout.setRefreshing(false);
         }, 1000);
     }
 
